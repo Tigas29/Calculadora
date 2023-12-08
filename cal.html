@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: #333;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+    }
+
+    h1 {
+        text-align: center;
+        padding: 20px 0;
+        margin: 0;
+    }
+
+    .calculadora {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .calculadora td {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .display {
+        width: calc(100% - 30px);
+        padding: 10px;
+        margin: 0;
+        font-size: 1.5em;
+        border: none;
+        background-color: #1a1a1a;
+        color: #fff;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.2em;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-clear {
+        background-color: #ff3d00;
+        color: #fff;
+    }
+
+    .btn-num,
+    .btn-del {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .btn-eq {
+        background-color: #4caf50;
+        color: #fff;
+    }
+
+
+    /* Adicione estas regras CSS ao seu código existente */
+
+    /* Estilos gerais para dispositivos móveis */
+    @media only screen and (max-width: 600px) {
+        .container {
+            border-radius: 0;
+        }
+
+        .calculadora td {
+            padding: 10px;
+            font-size: 1em;
+        }
+
+        h1 {
+            font-size: 1.5em;
+        }
+
+        .display {
+            width: calc(100% - 20px);
+            padding: 8px;
+            font-size: 1.2em;
+        }
+
+        .btn {
+            padding: 10px;
+            font-size: 1em;
+        }
+    }
+
+    @media only screen and (min-width: 601px) and (max-width: 768px) {
+        .calculadora td {
+            padding: 12px;
+            font-size: 1.2em;
+        }
+
+        h1 {
+            font-size: 1.8em;
+        }
+
+        .display {
+            width: calc(100% - 25px);
+            padding: 12px;
+            font-size: 1.5em;
+        }
+
+        .btn {
+            padding: 12px;
+            font-size: 1.2em;
+        }
+    }
+</style>
+
+<body>
+    <section class="container">
+        <h1>Calculadora</h1>
+
+        <table class="calculadora">
+            <tr>
+                <td colspan="4"><input type="text" class="display"></td>
+            </tr>
+
+            <tr>
+                <td><button class="btn btn-clear">C</button></td>
+                <td><button class="btn btn-num">(</button></td>
+                <td><button class="btn btn-num">)</button></td>
+                <td><button class="btn btn-num">/</button></td>
+            </tr>
+
+            <tr>
+                <td><button class="btn btn-num">7</button></td>
+                <td><button class="btn btn-num">8</button></td>
+                <td><button class="btn btn-num">9</button></td>
+                <td><button class="btn btn-num">*</button></td>
+            </tr>
+
+            <tr>
+                <td><button class="btn btn-num">4</button></td>
+                <td><button class="btn btn-num">5</button></td>
+                <td><button class="btn btn-num">6</button></td>
+                <td><button class="btn btn-num">+</button></td>
+            </tr>
+
+            <tr>
+                <td><button class="btn btn-num">1</button></td>
+                <td><button class="btn btn-num">2</button></td>
+                <td><button class="btn btn-num">3</button></td>
+                <td><button class="btn btn-num">-</button></td>
+            </tr>
+
+            <tr>
+                <td><button class="btn btn-num">.</button></td>
+                <td><button class="btn btn-num">0</button></td>
+                <td><button class="btn btn-del">&laquo;</button></td>
+                <td><button class="btn btn-eq">=</button></td>
+            </tr>
+        </table>
+
+    </section>
+
+
+</body>
+
+
+<script defer>
+    function constructor() {
+        return {
+            display: document.querySelector(".display"),
+            btnClear: document.querySelector(".btn-clear"),
+            inicia() {
+                this.cliqueBtns();
+                this.PresseionaEnter();
+                this.PresseionaDel();
+                this.teclado();
+            },
+            PresseionaDel() {
+                this.display.addEventListener("keydown", (e) => {
+                    if (e.key === "Backspace") {
+                        e.preventDefault();
+                    }
+                });
+            },
+            PresseionaEnter() {
+                this.display.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        this.realizaConta();
+                    }
+                });
+            },
+            teclado() {
+                document.addEventListener("keydown", (e) => {
+                    const key = e.key;
+                    if (/[0-9()+\-*/.]/.test(key) || key === "Enter") {
+                        e.preventDefault();
+                        if (key === "Enter") {
+                            this.realizaConta();
+                        } else {
+                            this.btnparaDisplay(key);
+                        }
+                    } else if (key === "Backspace") {
+                        e.preventDefault();
+                        this.deleteChar();
+                    }
+                });
+            },
+            clearDisplay() {
+                this.display.value = "";
+            },
+            deleteChar() {
+                this.display.value = this.display.value.slice(0, -1);
+            },
+            realizaConta() {
+                let conta = this.display.value;
+                try {
+                    conta = eval(conta);
+                    if (!conta && conta !== 0) {
+                        alert("CONTA INVÁLIDA");
+                        return;
+                    }
+                    this.display.value = String(conta);
+                } catch (e) {
+                    alert("CONTA INVÁLIDA");
+                }
+            },
+            cliqueBtns() {
+                const btnNums = document.querySelectorAll(".btn-num");
+                const btnClear = document.querySelector(".btn-clear");
+                const btnDel = document.querySelector(".btn-del");
+                const btnEq = document.querySelector(".btn-eq");
+
+                btnNums.forEach((e) => {
+                    e.addEventListener("click", () => {
+                        this.btnparaDisplay(e.innerText);
+                    });
+                });
+
+                btnClear.addEventListener("click", () => {
+                    this.clearDisplay();
+                });
+
+                btnDel.addEventListener("click", () => {
+                    this.deleteChar();
+                });
+
+                btnEq.addEventListener("click", () => {
+                    this.realizaConta();
+                });
+            },
+            btnparaDisplay(valor) {
+                this.display.value += valor;
+            },
+        };
+    }
+
+    constructor().inicia();
+
+
+
+</script>
+
+</html>
