@@ -10,7 +10,7 @@ Apenas um projeto para praticas bibliotecas nativas do JavaScript.
 <p align="center">
   <a href="#rocket-technologies">Tecnologia</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-how-to-use">Como usar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="https://cronometro-gold.vercel.app/">View</a>&nbsp;&nbsp;&nbsp;
+  <a href="https://calculadora-six-beryl.vercel.app/">View</a>&nbsp;&nbsp;&nbsp;
 </p>
 
 ## :rocket: Tecnologias
